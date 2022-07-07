@@ -1,4 +1,3 @@
-// console.log('hello');
 const express = require('express')
 const bodyParser = require('body-parser')
 const cors = require('cors')
@@ -12,6 +11,12 @@ app.use(cors()) //to allow any host or client to access
 app.get('/status', (req, res) => {
     res.send({
         message: 'hello world! Riddhi here!'
+    })
+})
+
+app.post('/register', (req, res) => {
+    res.send({
+        message: `Hello ${req.body.email}! Your user was registered!`
     })
 })
 
