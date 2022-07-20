@@ -13,7 +13,7 @@ app.use(cors()) //to allow any host or client to access
 
 require('./routes')(app)
 
-sequelize.sync() 
+sequelize.sync({force:true}) 
     .then(() => {
         app.listen(config.port)
         console.log(`Server started on port ${config.port}`)
