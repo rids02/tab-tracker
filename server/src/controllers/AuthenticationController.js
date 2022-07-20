@@ -1,4 +1,13 @@
 const {User} = require('../models')
+const jwt = require('jsonwebtoken')
+const config = require('../config/config')
+
+function jwtSignUser(user) {
+    const one_Week = 60*60*24*7
+    return jwt.sign(user, config.authentication.jwtSecret, {
+        expiresIn: one_Week
+    })
+}
 
 module.exports = {
     async register(req, res, next) {
@@ -18,7 +27,7 @@ module.exports = {
             const {email, password} = req.body
             const user = await User.findOne({
                 where: {
-                    email: email,
+                    email: email
                 }
             }) //finds a user
             if(!user){
@@ -27,7 +36,7 @@ module.exports = {
                 })
             }
 
-            const isPasswordValid = password == user.password
+            const isPasswordValid = password === user.password
             // console.log(password, user.password)
             if(!isPasswordValid){
                 return res.status(403).send({
@@ -35,12 +44,13 @@ module.exports = {
                 })  
             }
             const userJson = user.toJSON()
+            console.log(userJson)
             res.send({
-                user: userJson
+                user: userJson,
+                token: jwtSignUser(userJson)
             })
-            res.send(user.toJSON()) //send the error (if any) to user
         }catch(err) {
-            res.status(500).send({
+            res.status(403).send({
                 err: 'An error has occured trying to login!'
             })
             next()
