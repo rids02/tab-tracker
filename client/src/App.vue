@@ -1,13 +1,16 @@
 <template>
-  <nav>
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link> |
-    <router-link :to="{name: 'Register'}">Register</router-link>
+  <nav class="navbar navbar-inverse fixed-top">
+    <div class="container-fluid">
+    <router-link to="/" class="btn">Home</router-link> |
+    <router-link to="/login" class="btn">Login</router-link> |
+    <router-link :to="{name: 'Register'}" class="btn">Sign Up</router-link>
+    </div>
   </nav>
   <router-view/>
 </template>
 
 <style>
+body { padding-top: 70px; }
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -16,17 +19,21 @@
   color: #2c3e50;
 }
 
+.navbar{
+  height: 9vh;
+  background-color: #0B8677;
+}
 nav {
   padding: 30px;
 }
 
-nav a {
+nav a:hover {
   font-weight: bold;
-  color: #2c3e50;
+  color: #ECE8E2;
 }
 
 nav a.router-link-exact-active {
-  color: #42b983;
+  color: #ECE8E2;
 }
 
 

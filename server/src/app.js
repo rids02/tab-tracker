@@ -3,21 +3,18 @@ const bodyParser = require('body-parser')
 const cors = require('cors')
 const morgan = require('morgan')
 
+const {sequelize} = require('./models')
+const config = require('./config/config')
+
 const app = express()
 app.use(morgan('combined'))
 app.use(bodyParser.json()) //to allow our app any json request that are sent in
 app.use(cors()) //to allow any host or client to access
 
-app.get('/status', (req, res) => {
-    res.send({
-        message: 'hello world! Riddhi here!'
-    })
-})
+require('./routes')(app)
 
-app.post('/register', (req, res) => {
-    res.send({
-        message: `Hello ${req.body.email}! Your user was registered!`
+sequelize.sync() 
+    .then(() => {
+        app.listen(config.port)
+        console.log(`Server started on port ${config.port}`)
     })
-})
-
-app.listen(process.env.PORT || 8081)
